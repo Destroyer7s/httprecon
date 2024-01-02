@@ -82,7 +82,7 @@ def main():
     more_specific_info = input("\nMore specific info? (y/n): ").lower()
 
     if more_specific_info == 'y':
-        print("\nChecking HTTP versions for the found addresses:")
+        print("\nChecking HTTP versions for found addresses:")
         for ip in http_only_ips:
             supported_versions = []
             for version in ['0.9', '1.0', '1.1', '2.0', '3.0']:  # You can customize the list of versions to check
