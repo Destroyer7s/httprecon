@@ -4,6 +4,7 @@ import sys
 import time
 from datetime import timedelta
 
+
 def check_http_support(ip, port):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -86,7 +87,7 @@ def main():
         time.sleep(0.1)  # Optional: Add a short delay to control the refresh rate
 
     print("\nScanning complete.\n\n\033[96mPossible HTTP addresses:\033[0m")
-    for ip in http_only_ips:
+    for ip in http_only_ips: 
         print(f"- {ip}")
 
     # Check if there are IP addresses with HTTP but not HTTPS
