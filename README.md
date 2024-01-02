@@ -9,4 +9,4 @@ A basic demo can be found below:
 
 
 
- *Total time invested ~1hr
+ *Total time invested ~2hr
