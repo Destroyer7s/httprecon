@@ -21,6 +21,9 @@ def check_http_version(ip, version):
     except (socket.timeout, socket.error):
         return False
 
+def calculate_probability(success_count, total_count):
+    return (success_count / total_count) * 100 if total_count > 0 else 0
+
 def loading_animation():
     animation = "|/-\\"
     for _ in range(10):
@@ -44,13 +47,16 @@ def display_banner():
 def main():
     display_banner()
 
-    ip_input = input("\033[96mEnter an IP address or range (e.g., 192.168.1.1 or 192.168.1.1/22):\033[0m ")
+    ip_input = input("\033[96mEnter single IP address or CIDR notation range (e.g., 192.168.1.1 or 192.168.1.1/22):\033[0m ")
 
     try:
         ip_network = ipaddress.IPv4Network(ip_input, strict=False)
     except ValueError as e:
         print(f"\033[91mError: {e}\033[0m")
         return
+
+    total_ips = ip_network.num_addresses  # Get the total number of IP addresses
+    print(f"\n\033[96mScanning {total_ips} IP addresses...\033[0m")
 
     loading_animation()
 
@@ -82,24 +88,22 @@ def main():
     more_specific_info = input("\n\033[96mMore specific info? (y/n):\033[0m ").lower()
 
     if more_specific_info == 'y':
-        print("\nChecking HTTP versions for found addresses:")
         for ip in http_only_ips:
             supported_versions = {'0.9': 0, '1.0': 0, '1.1': 0, '2.0': 0, '3.0': 0}
             total_checks = 0
 
-            for version in supported_versions:
-                if check_http_version(ip, version):
-                    supported_versions[version] += 1
-                    total_checks += 1
+            for version in supported_versions.keys():
+                for _ in range(3):  # Perform multiple checks for better accuracy
+                    if check_http_version(ip, version):
+                        supported_versions[version] += 1
+                        total_checks += 1
 
             print(f"\n\033[95mIP Address: {ip}\033[0m")
-            if total_checks > 0:
-                print("\033[92mConfidence Level:\033[0m")
-                for version, count in supported_versions.items():
-                    probability = (count / total_checks) * 100
-                    print(f"- {version}: {probability:.2f}% confidence")
-            else:
-                print("\033[91mNo supported HTTP versions found\033[0m")
+            print("\033[92mProbability of HTTP Versions:\033[0m")
+            for version, count in supported_versions.items():
+                probability = calculate_probability(count, total_checks)
+                if probability > 0:
+                    print(f"- HTTP/{version}: \033[93m{probability:.2f}%\033[0m")
     else:
         print("\n\033[96m“To know your Enemy, you must become your Enemy.” ― Sun Tzu\033[0m")
 
