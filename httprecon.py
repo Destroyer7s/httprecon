@@ -31,13 +31,11 @@ def loading_animation():
 
 def display_banner():
     banner = """
-    \033[91m
-                                           
+    \033[91m                                     
 ┓              
 ┣┓╋╋┏┓┏┓┏┓┏┏┓┏┓
 ┛┗┗┗┣┛┛ ┗ ┗┗┛┛┗
-    ┛          
-              
+    ┛                  
     \033[0m
     """
     print(banner)
