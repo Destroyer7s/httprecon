@@ -31,15 +31,15 @@ def loading_animation():
 
 def display_banner():
     banner = """
-    \033[91m                                     
-┓              
-┣┓╋╋┏┓┏┓┏┓┏┏┓┏┓
-┛┗┗┗┣┛┛ ┗ ┗┗┛┛┗
-    ┛                  
+     \033[91m                                     
+    ┓              
+    ┣┓╋╋┏┓┏┓┏┓┏┏┓┏┓
+    ┛┗┗┗┣┛┛ ┗ ┗┗┛┛┗
+        ┛                  
     \033[0m
     """
     print(banner)
-    time.sleep(1)  # Optional delay for a more dramatic effect
+    time.sleep(1)  # Delay for dramatic effect
 
 def main():
     display_banner()
@@ -64,7 +64,7 @@ def main():
         sys.stdout.flush()
 
         if http_support and not https_support:
-            print(f" - possible HTTP address")
+            print(f" - Possible HTTP address")
             http_only_ips.append(ip_str)
 
         time.sleep(0.1)  # Optional: Add a short delay to control the refresh rate
@@ -82,11 +82,16 @@ def main():
     more_specific_info = input("\nMore specific info? (y/n): ").lower()
 
     if more_specific_info == 'y':
-        print("\nHTTP Versions:")
+        print("\nChecking HTTP versions for the found addresses:")
         for ip in http_only_ips:
-            for version in ['1.0', '1.1', '2.0']:  # You can customize the list of versions to check
-                version_supported = check_http_version(ip, version)
-                print(f"- {ip} supports HTTP {version}" if version_supported else f"- {ip} does not support HTTP {version}")
+            supported_versions = []
+            for version in ['0.9', '1.0', '1.1', '2.0', '3.0']:  # You can customize the list of versions to check
+                if check_http_version(ip, version):
+                    supported_versions.append(version)
+            if supported_versions:
+                print(f"\033[92m- {ip} supports HTTP versions: {', '.join(supported_versions)}\033[0m")
+            else:
+                print(f"\033[91m- {ip} does not support any checked HTTP versions\033[0m")
     else:
         print("\n“To know your Enemy, you must become your Enemy.” ― Sun Tzu")
 
