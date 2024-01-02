@@ -2,6 +2,7 @@ import socket
 import ipaddress
 import sys
 import time
+from datetime import timedelta
 
 def check_http_support(ip, port):
     try:
@@ -44,10 +45,17 @@ def display_banner():
     print(banner)
     time.sleep(1)  # Delay for dramatic effect
 
+def format_time(seconds):
+    td = timedelta(seconds=seconds)
+    days, seconds = divmod(td.seconds, 86400)
+    hours, seconds = divmod(seconds, 3600)
+    minutes, seconds = divmod(seconds, 60)
+    return f"{days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
+
 def main():
     display_banner()
 
-    ip_input = input("\033[96mEnter single IP address or CIDR notation range (e.g., 192.168.1.1 or 192.168.1.1/22):\033[0m ")
+    ip_input = input("\033[96mEnter single IP address or CIDR Notation range (e.g., 192.168.1.1 or 192.168.1.1/22):\033[0m ")
 
     try:
         ip_network = ipaddress.IPv4Network(ip_input, strict=False)
@@ -58,16 +66,18 @@ def main():
     total_ips = ip_network.num_addresses  # Get the total number of IP addresses
     print(f"\n\033[96mScanning {total_ips} IP addresses...\033[0m")
 
+    start_time = time.time()
+
     loading_animation()
 
     http_only_ips = []
-    for ip in ip_network.hosts():
+    for i, ip in enumerate(ip_network.hosts(), start=1):
+        sys.stdout.write(f"\r\033[93mScanning IP: {ip.compressed} | Progress: {i}/{total_ips} | Time Elapsed: {format_time(time.time() - start_time)} | Estimated Time Remaining: {format_time(((time.time() - start_time) / i) * (total_ips - i))}\033[0m ")
+        sys.stdout.flush()
+
         ip_str = str(ip)
         http_support = check_http_support(ip_str, 80)
         https_support = check_http_support(ip_str, 443)
-
-        sys.stdout.write(f"\r\033[93mScanning IP: {ip_str}\033[0m ")
-        sys.stdout.flush()
 
         if http_support and not https_support:
             print(f" - \033[92mPossible HTTP address\033[0m")
