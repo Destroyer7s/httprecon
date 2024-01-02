@@ -56,7 +56,7 @@ def format_time(seconds):
 def main():
     display_banner()
 
-    ip_input = input("\033[96mEnter single IP address or CIDR Notation range (e.g., 192.168.1.1 or 192.168.1.1/22):\033[0m ")
+    ip_input = input("\033[96mEnter single IP address or CIDR notation range (e.g., 192.168.1.1 or 192.168.1.1/22):\033[0m ")
 
     try:
         ip_network = ipaddress.IPv4Network(ip_input, strict=False)
