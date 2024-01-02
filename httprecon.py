@@ -29,7 +29,27 @@ def loading_animation():
             sys.stdout.flush()
             time.sleep(0.1)
 
+def display_banner():
+    banner = """
+    \033[91m
+                                           
+    )    )   )                             
+ ( /( ( /(( /(       (     (               
+ )\()))\())\())`  )  )(   ))\ (  (   (     
+((_)\(_))(_))/ /(/( (()\ /((_))\ )\  )\ )  
+| |(_) |_| |_ ((_)_\ ((_|_)) ((_|(_)_(_/(  
+| ' \|  _|  _|| '_ \) '_/ -_) _/ _ \ ' \)) 
+|_||_|\__|\__|| .__/|_| \___\__\___/_||_|  
+              |_|
+              
+    \033[0m
+    """
+    print(banner)
+    time.sleep(1)  # Optional delay for a more dramatic effect
+
 def main():
+    display_banner()
+
     ip_input = input("Enter an IP address or range (e.g., 192.168.1.1 or 192.168.1.1/22): ")
 
     try:
