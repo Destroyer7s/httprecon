@@ -72,7 +72,7 @@ def main():
 
     http_only_ips = []
     for i, ip in enumerate(ip_network.hosts(), start=1):
-        sys.stdout.write(f"\r\033[93mScanning IP: {ip.compressed} | Progress: {i}/{total_ips} | Time Elapsed: {format_time(time.time() - start_time)} | Estimated Time Remaining: {format_time(((time.time() - start_time) / i) * (total_ips - i))}\033[0m ")
+        sys.stdout.write(f"\r\033[93mScanning IP: {ip.compressed} | Progress: {i}/{total_ips} | Estimated Time Remaining: {format_time(((time.time() - start_time) / i) * (total_ips - i))}\033[0m ")
         sys.stdout.flush()
 
         ip_str = str(ip)
