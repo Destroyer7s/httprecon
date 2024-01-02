@@ -9,5 +9,5 @@ A basic demo can be found below:
 
 
 
- *Total time invested ~5hr  
- ¯\\\_(ツ)\_/¯
+ *Total time invested ~6hr  
+ Hey I'm learning man ¯\\\_(ツ)\_/¯
