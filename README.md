@@ -12,5 +12,5 @@ A basic demo (limited example to 4 addresses) can be found below:
 
 
 
- *Total time invested ~6hr  
+ *Total time invested: `~6hr`  
  Hey I'm learning man ¯\\\_(ツ)\_/¯
