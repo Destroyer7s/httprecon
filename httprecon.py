@@ -33,14 +33,10 @@ def display_banner():
     banner = """
     \033[91m
                                            
-    )    )   )                             
- ( /( ( /(( /(       (     (               
- )\()))\())\())`  )  )(   ))\ (  (   (     
-((_)\(_))(_))/ /(/( (()\ /((_))\ )\  )\ )  
-| |(_) |_| |_ ((_)_\ ((_|_)) ((_|(_)_(_/(  
-| ' \|  _|  _|| '_ \) '_/ -_) _/ _ \ ' \)) 
-|_||_|\__|\__|| .__/|_| \___\__\___/_||_|  
-              |_|
+┓              
+┣┓╋╋┏┓┏┓┏┓┏┏┓┏┓
+┛┗┗┗┣┛┛ ┗ ┗┗┛┛┗
+    ┛          
               
     \033[0m
     """
@@ -70,22 +66,22 @@ def main():
         sys.stdout.flush()
 
         if http_support and not https_support:
-            print(f" - HTTP but not HTTPS")
+            print(f" - possible HTTP address")
             http_only_ips.append(ip_str)
 
         time.sleep(0.1)  # Optional: Add a short delay to control the refresh rate
 
-    print("\nScanning complete.\n\nIP Addresses with HTTP but not HTTPS:")
+    print("\nScanning complete.\n\nPossible HTTP addresses:")
     for ip in http_only_ips:
         print(f"- {ip}")
 
     # Check if there are IP addresses with HTTP but not HTTPS
     if not http_only_ips:
-        print("No IP addresses found with HTTP but not HTTPS support.")
+        print("No IP addresses found with HTTP")
         return
 
     # Ask if the user wants to see more specific information for each address
-    more_specific_info = input("\nDo you want to see more specific information for each address? (y/n): ").lower()
+    more_specific_info = input("\nMore specific info? (y/n): ").lower()
 
     if more_specific_info == 'y':
         print("\nHTTP Versions:")
@@ -94,7 +90,7 @@ def main():
                 version_supported = check_http_version(ip, version)
                 print(f"- {ip} supports HTTP {version}" if version_supported else f"- {ip} does not support HTTP {version}")
     else:
-        print("\nNot showing more specific information.")
+        print("\n“To know your Enemy, you must become your Enemy.” ― Sun Tzu")
 
 if __name__ == "__main__":
     main()
